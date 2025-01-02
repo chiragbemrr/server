@@ -154,7 +154,28 @@ app.get('/api/emissions/15minco2', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch last 15 minutes of CO2 data' });
     }
 });
+app.get('/api/emissions/pi', async (req, res) => {
+    try {
+        await client.connect();
+        const collection = client.db('gassy').collection('gassy');
 
+        const pipeline = [
+            {
+                $project: {
+                    _id: 0,
+                    CO_Emissions_ppm: { $round: ['$CO_Emissions_ppm', 2] }
+                }
+            }
+        ];
+
+        const responseData = await collection.aggregate(pipeline).toArray();
+        res.json(responseData);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve data' });
+    } finally {
+        await client.close();
+    }
+});
 // Route: Session-based data
 app.get('/api/emissions/session', async (req, res) => {
     try {
@@ -165,7 +186,7 @@ app.get('/api/emissions/session', async (req, res) => {
             {
                 $project: {
                     _id: 0,
-                    time: '$Date',
+                    time: ['$Date'],
                     CO: { $round: ['$CO_Emissions_ppm', 2] },
                     CO2: { $round: ['$CO2_Emission_PPM', 2] }
                 }

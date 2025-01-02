@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const cors = require('cors');
 
-
+app.use(express.static(__dirname));
 // Middleware to serve static files
 app.use(cors({
     origin: 'https://chiragbemrr.github.io' // Replace with your allowed origin

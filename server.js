@@ -2,10 +2,13 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
+const cors = require('cors');
+
 
 // Middleware to serve static files
-app.use(express.static(__dirname));
-
+app.use(cors({
+    origin: 'https://chiragbemrr.github.io' // Replace with your allowed origin
+}));
 // MongoDB connection
 const uri = "mongodb+srv://chirag:12345@cluster0.waacz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);

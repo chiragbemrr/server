@@ -10,7 +10,7 @@ const agent = new https.Agent({ keepAlive: true });
 app.use(express.static(__dirname));
 // Middleware to serve static files
 app.use(cors({
-    origin: 'https://gasmetrics.netlify.app/'//'https://chiragbemrr.github.io' // Replace with your allowed origin
+    origin: 'https://gasmetrics.netlify.app'//'https://chiragbemrr.github.io' // Replace with your allowed origin
 }));
 // MongoDB connection
 const uri = "mongodb+srv://chirag:12345@cluster0.waacz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";

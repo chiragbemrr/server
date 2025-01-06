@@ -3,6 +3,7 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
 const cors = require('cors');
+const agent = new https.Agent({ keepAlive: true });
 
 app.use(express.static(__dirname));
 // Middleware to serve static files
@@ -42,7 +43,7 @@ app.get('/api/emissions/latest', async (req, res) => {
 
         if (latestRecord.length > 0) {
             const dateStr = latestRecord[0].Date;
-
+            //res.set('Cache-Control', 'public, max-age=3600');
             res.json({
                 latestTime: formatDateTime(dateStr),
                 latestEmission: latestRecord[0].CO_Emissions_ppm,
@@ -91,7 +92,7 @@ app.get('/api/emissions/daily-averages', async (req, res) => {
             },
             { $sort: { date: 1 } }
         ]).toArray();
-
+        res.set('Cache-Control', 'public, max-age=3600');
         res.json(dailyAverages);
     } catch (error) {
         console.error('Error fetching daily averages:', error);
@@ -169,6 +170,7 @@ app.get('/api/emissions/pi', async (req, res) => {
         ];
 
         const responseData = await collection.aggregate(pipeline).toArray();
+         res.set('Cache-Control', 'public, max-age=3600');
         res.json(responseData);
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve data' });
@@ -195,13 +197,14 @@ app.get('/api/emissions/session', async (req, res) => {
 
         const responseData = await collection.aggregate(pipeline).toArray();
         const sortedData = responseData.sort((a, b) => new Date(a.time) - new Date(b.time));
+        res.set('Cache-Control', 'public, max-age=3600');
         res.json(sortedData);
     } catch (error) {
         console.error('Error fetching session data:', error);
         res.status(500).json({ error: 'Failed to retrieve session data' });
     }
 });
-
+app.use(compression());
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

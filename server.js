@@ -1,4 +1,6 @@
 // Required modules
+const https = require('https'); // Import the https module
+const compression = require('compression');
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();

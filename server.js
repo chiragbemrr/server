@@ -199,7 +199,7 @@ app.get('/api/emissions/session', async (req, res) => {
             {
                 $project: {
                     _id: 0,
-                    time: '$Date',
+                    time: ['$Date'],
                     CO: { $round: ['$CO_Emissions_ppm', 2] },
                     CO2: { $round: ['$CO2_Emission_PPM', 2] }
                 }

@@ -102,7 +102,7 @@ app.get('/api/emissions/daily-averages', async (req, res) => {
             },
             { $sort: { date: 1 } }
         ]).toArray();
-        res.set('Cache-Control', 'public, max-age=3600');
+        //res.set('Cache-Control', 'public, max-age=3600');
         res.json(dailyAverages);
     } catch (error) {
         console.error('Error fetching daily averages:', error);
@@ -181,7 +181,7 @@ app.get('/api/emissions/pi', async (req, res) => {
         ];
 
         const responseData = await collection.aggregate(pipeline).toArray();
-        res.set('Cache-Control', 'public, max-age=3600');
+       // res.set('Cache-Control', 'public, max-age=3600');
         res.json(responseData);
     } catch (error) {
         console.error('Error fetching pi data:', error);
@@ -208,7 +208,7 @@ app.get('/api/emissions/session', async (req, res) => {
         ];
 
         const responseData = await collection.aggregate(pipeline).toArray();
-        res.set('Cache-Control', 'public, max-age=3600');
+       // res.set('Cache-Control', 'public, max-age=3600');
         res.json(responseData);
     } catch (error) {
         console.error('Error fetching session data:', error);

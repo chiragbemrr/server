@@ -208,7 +208,7 @@ app.get('/api/emissions/session', async (req, res) => {
         ];
 
         const responseData = await collection.aggregate(pipeline).toArray();
-       // res.set('Cache-Control', 'public, max-age=3600');
+        res.set('Cache-Control', 'public, max-age=3600');
         res.json(responseData);
     } catch (error) {
         console.error('Error fetching session data:', error);

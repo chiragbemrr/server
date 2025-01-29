@@ -175,6 +175,7 @@ app.get('/api/emissions/pi', async (req, res) => {
             {
                 $project: {
                     _id: 0,
+                    date: '$Date',
                     CO_Emissions_ppm: { $round: ['$CO_Emissions_ppm', 2] }
                 }
             }

@@ -13,7 +13,27 @@ const client = new MongoClient(MONGO_URI);
 let db;
 
 // Initialize middleware
-app.use(cors({ origin: 'https://chiragbemrr.github.io' }));
+// app.use(cors({ origin: 'https://chiragbemrr.github.io' }));
+const allowedOrigins = [
+  'https://chiragbemrr.github.io',  // your GitHub Pages app
+  'http://localhost:19006',         // Expo Go (web) dev
+  'http://localhost:3000',          // Web preview (if running local)
+  'exp://127.0.0.1:19000',          // Native app via Expo Go
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true  // Only if you are using cookies or Authorization headers
+}));
+
 app.use(compression());
 
 // Connect to MongoDB once and reuse the connection

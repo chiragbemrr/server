@@ -16,7 +16,8 @@ let db;
 // app.use(cors({ origin: 'https://chiragbemrr.github.io' }));
 const allowedOrigins = [
   'https://chiragbemrr.github.io', // GitHub Pages app
-  'https://zp1v56uxy8rdx5ypatb0ockcb9tr6a-oci3--8081--96435430.local-credentialless.webcontainer-api.io'
+  'https://zp1v56uxy8rdx5ypatb0ockcb9tr6a-oci3--8081--96435430.local-credentialless.webcontainer-api.io',
+  'https://guileless-cocada-582f17.netlify.app'
 ];
 
 // app.use(cors({
